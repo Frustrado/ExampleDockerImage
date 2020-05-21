@@ -5,19 +5,29 @@ import (
 	"net/http"
 	"os"
 )
+
 type ServerConfig struct {
-	Addr string
-	dbUri string
+	Addr  string
+	DbUri string
 }
+
+type Application struct {
+	Data []string
+}
+
 func main() {
 	cfg := ServerConfig{
 		Addr:  getEnv("test_addr", ":8080"),
-		dbUri: getEnv("db_addr", "test"),
+		DbUri: getEnv("db_addr", "test"),
+	}
+
+	app := &Application{
+		Data: make([]string, 0),
 	}
 
 	server := http.Server{
 		Addr:    cfg.Addr,
-		Handler: routes(),
+		Handler: app.routes(),
 	}
 	err := server.ListenAndServe()
 	log.Fatal(err)
@@ -29,4 +39,3 @@ func getEnv(key, fallback string) string {
 	}
 	return fallback
 }
-

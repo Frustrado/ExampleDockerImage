@@ -1,13 +1,14 @@
 package main
 
 import (
-"github.com/bmizerany/pat"
-"net/http"
+	"github.com/bmizerany/pat"
+	"net/http"
 )
 
-func routes() http.Handler {
+func (app *Application) routes() http.Handler {
 	mux := pat.New()
 	mux.Get("/", http.HandlerFunc(showExample))
-	mux.Post("/", http.HandlerFunc(createExample))
+	mux.Get("/all", http.HandlerFunc(app.showAllExamples))
+	mux.Post("/", http.HandlerFunc(app.createExample))
 	return mux
 }

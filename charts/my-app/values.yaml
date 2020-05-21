@@ -1,3 +1,4 @@
 replicaCount: 1
+messageText: Your name here
 service:
-  type: NodePort
+  type: LoadBalancer
