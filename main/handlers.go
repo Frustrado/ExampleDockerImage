@@ -2,13 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"log"
 	"net/http"
 )
 
-type test_msg struct {
-	Test string
+type TestMsg struct {
+	Test string `json:"test"`
 }
 
 func showExample(w http.ResponseWriter, r *http.Request) {
@@ -23,14 +22,11 @@ func showExample(w http.ResponseWriter, r *http.Request) {
 }
 
 func createExample(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
+	var t TestMsg
+	err := json.NewDecoder(r.Body).Decode(&t)
 	if err != nil {
-		panic(err)
-	}
-	var t test_msg
-	err = json.Unmarshal(body, t)
-	if err != nil {
-		panic(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 	log.Println(t.Test)
 }

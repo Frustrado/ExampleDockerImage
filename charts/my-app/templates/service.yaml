@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: my-app
+    app.kubernetes.io/managed-by: Helm
+  name: my-app
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: my-app
+status:
+  loadBalancer: {}
