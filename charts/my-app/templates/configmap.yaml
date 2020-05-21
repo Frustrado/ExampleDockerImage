@@ -5,3 +5,7 @@ metadata:
   namespace: default
 data:
   MESSAGE_VALUE: {{ .Values.messageText }}
+
+#docker build -t utheman/example_aui:0.3.0  .
+# docker push utheman/example_aui:0.2.0
+#helm install --generate-name .
