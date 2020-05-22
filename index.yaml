@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  my-app:
+  - apiVersion: v1
+    appVersion: "1"
+    created: "2020-05-22T22:40:49.8469428+02:00"
+    description: Simple custom chart for AUI
+    digest: 9af9ed5fe19fe02a0796667a8fa04ac7041e2232a782c193e7b21c34e93c4329
+    name: my-app
+    urls:
+    - http://utheman.github.io/ExampleDockerImage/my-app-1.0.0.tgz
+    version: 1.0.0
+generated: "2020-05-22T22:40:49.8439497+02:00"
