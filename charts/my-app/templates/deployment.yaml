@@ -17,7 +17,7 @@ spec:
         app: my-app
     spec:
       containers:
-      - image: utheman/example_aui:0.4.0
+      - image: utheman/example_aui:0.7.0
         name: my-app
         env:
           - name: MESSAGE_VALUE_KEY
@@ -25,5 +25,12 @@ spec:
               configMapKeyRef:
                 name: message-config
                 key: MESSAGE_VALUE
+          - name: MY_APP_DB_HOST
+            value: aui-mongodb
+          - name: MY_APP_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-pass
+                key: password
         ports:
           - containerPort: 8080

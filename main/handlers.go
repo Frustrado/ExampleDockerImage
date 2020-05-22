@@ -2,6 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"log"
 	"net/http"
 )
 
@@ -21,10 +24,13 @@ func showExample(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *Application) showAllExamples(w http.ResponseWriter, r *http.Request) {
-	data := app.Data
+	data, err := app.Data.Get()
+	if err != nil {
+		log.Fatal(err)
+	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Fatal(err)
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -38,5 +44,14 @@ func (app *Application) createExample(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	app.Data = append(app.Data, t.Test)
+	log.Print("Inserting")
+	insertResult, err := app.Data.Insert(t.Test)
+	if err != nil {
+		log.Print("Cannot insert")
+		log.Fatal(err)
+	}
+	log.Print("Inserted")
+	if _, ok := insertResult.InsertedID.(primitive.ObjectID); ok {
+		http.Redirect(w, r, fmt.Sprintf("/all"), http.StatusSeeOther)
+	}
 }
