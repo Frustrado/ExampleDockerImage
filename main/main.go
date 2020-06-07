@@ -19,6 +19,7 @@ type Application struct {
 }
 
 func main() {
+	log.Print("Starting")
 	cfg := ServerConfig{
 		Addr:  getEnv("test_addr", ":8080"),
 		DbUri: "mongodb://" + getEnv("MY_APP_DB_HOST", "database.default.svc.cluster.local"),

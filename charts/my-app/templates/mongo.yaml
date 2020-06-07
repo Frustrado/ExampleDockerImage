@@ -17,6 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mongodb-pv-claim
   labels:
+    tier: mongodb
     app: my-app
 spec:
   accessModes:
@@ -30,6 +31,7 @@ kind: StatefulSet
 metadata:
   name: aui-mongodb
   labels:
+    tier: mongodb
     app: my-app
 spec:
   serviceName: "aui-mongodb"
@@ -53,6 +55,9 @@ spec:
           volumeMounts:
             - name: myclaim
               mountPath: /data/db
+          resources:
+            requests:
+              cpu: "250m"
   volumeClaimTemplates:
   - metadata:
       name: myclaim

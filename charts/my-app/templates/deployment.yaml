@@ -6,7 +6,7 @@ metadata:
     app: my-app
   name: my-app
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{.Values.replicaCount}}
   selector:
     matchLabels:
       app: my-app
@@ -17,7 +17,7 @@ spec:
         app: my-app
     spec:
       containers:
-      - image: utheman/example_aui:0.7.0
+      - image: utheman/example_aui:0.7.1
         name: my-app
         env:
           - name: MESSAGE_VALUE_KEY
@@ -34,3 +34,6 @@ spec:
                 key: password
         ports:
           - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
